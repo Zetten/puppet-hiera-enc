@@ -1,0 +1,2 @@
+---
+environment: 'production' # Puppet default environment

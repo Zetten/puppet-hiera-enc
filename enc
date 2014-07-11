@@ -1,0 +1,25 @@
+#!/usr/bin/ruby
+
+require 'hiera'
+require 'yaml'
+
+# Query scope
+scope = { 'fqdn' => ARGV[0] }
+
+# Hiera interface
+hiera = Hiera.new(:config => '/etc/puppet/hiera-enc/hiera-enc.yaml')
+
+parameters = hiera.lookup('parameters', nil, scope)
+environment = hiera.lookup('environment', nil, scope)
+
+result = {}
+
+if parameters
+	result['parameters'] = parameters
+end
+
+if environment
+	result['environment'] = environment
+end
+
+puts result.to_yaml
