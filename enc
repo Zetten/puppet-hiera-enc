@@ -34,13 +34,13 @@ environment = hiera.lookup('environment', nil, scope)
 result = {}
 
 if parameters
-    result['parameters'] = parameters
+  result['parameters'] = parameters
 end
 
 if environment
-    result['environment'] = environment
+  result['environment'] = environment
 end
 
 if result.has_key?('environment') || result.has_key?('parameters')
-    puts result.to_yaml
+  puts result.to_yaml
 end
