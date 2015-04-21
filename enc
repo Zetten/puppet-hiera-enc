@@ -19,22 +19,28 @@ require 'hiera'
 require 'yaml'
 
 # Query scope
-scope = { 'fqdn' => ARGV[0] }
+scope = { '::fqdn' => ARGV[0] }
 
 # Hiera interface
-hiera = Hiera.new(:config => '/etc/puppet/hiera-enc/hiera-enc.yaml')
+config = YAML::load_file('/etc/puppet/hiera-enc/hiera-enc.yaml')
 
+#Comment out to enable debug logging.
+config[:logger] = 'noop'
+
+hiera = Hiera.new(:config => config)
 parameters = hiera.lookup('parameters', nil, scope)
 environment = hiera.lookup('environment', nil, scope)
 
 result = {}
 
 if parameters
-	result['parameters'] = parameters
+  result['parameters'] = parameters
 end
 
 if environment
-	result['environment'] = environment
+  result['environment'] = environment
 end
 
-puts result.to_yaml
+if result.has_key?('environment') || result.has_key?('parameters')
+  puts result.to_yaml
+end
