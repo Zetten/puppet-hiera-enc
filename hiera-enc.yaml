@@ -4,5 +4,5 @@
 :yaml:
   :datadir: /etc/puppet/hiera-enc/nodes
 :hierarchy:
-  - "%{fqdn}"
+  - "%{::fqdn}"
   - "default"
