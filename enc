@@ -24,17 +24,15 @@ scope = { 'clientcert' => ARGV[0], 'fqdn' => ARGV[0], 'hostname' => ARGV[0] }
 # Hiera interface
 hiera = Hiera.new(:config => '/etc/puppet/hiera-enc/hiera-enc.yaml')
 
-parameters = hiera.lookup('parameters', nil, scope)
-environment = hiera.lookup('environment', nil, scope)
+lookupValues = ['environment', 'parameters', 'classes']
 
 result = {}
 
-if parameters
-	result['parameters'] = parameters
-end
-
-if environment
-	result['environment'] = environment
+lookup_values.each do |value|
+  hiera_value = hiera.lookup(value, nil, scope)
+  if hiera_value
+    result[value] = hiera_value
+  end
 end
 
 puts result.to_yaml
