@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 #
 # Copyright 2014 Peter van Zetten
 #
@@ -24,7 +24,7 @@ scope = { 'clientcert' => ARGV[0], 'fqdn' => ARGV[0], 'hostname' => ARGV[0] }
 # Hiera interface
 hiera = Hiera.new(:config => '/etc/puppet/hiera-enc/hiera-enc.yaml')
 
-lookupValues = ['environment', 'parameters', 'classes']
+lookup_values = ['environment', 'parameters', 'classes']
 
 result = {}
 
